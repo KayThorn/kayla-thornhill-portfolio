@@ -54,7 +54,23 @@ var SKILLS = [
   { name: "IT Support", discipline: "Security & IT", term: "support", hours: "", courses: "", certs: "" },
   { name: "Linux", discipline: "Security & IT", term: "linux", hours: "", courses: "", certs: "" },
   { name: "Security+ (in training)", discipline: "Security & IT", term: "security", hours: "", courses: "", certs: "" },
-  { name: "SOC Fundamentals", discipline: "Security & IT", term: "security", hours: "", courses: "", certs: "" }
+  { name: "SOC Fundamentals", discipline: "Security & IT", term: "security", hours: "", courses: "", certs: "" },
+  { name: "SQL", discipline: "Data & Analytics", term: "sql", hours: "", courses: "", certs: "" },
+  { name: "MySQL", discipline: "Data & Analytics", term: "mysql", hours: "", courses: "", certs: "" },
+  { name: "MariaDB", discipline: "Data & Analytics", term: "mariadb", hours: "", courses: "", certs: "" },
+  { name: "PostgreSQL", discipline: "Data & Analytics", term: "postgresql", hours: "", courses: "", certs: "" },
+  { name: "KNIME", discipline: "Data & Analytics", term: "knime", hours: "", courses: "", certs: "" },
+  { name: "Tableau", discipline: "Data & Analytics", term: "tableau", hours: "", courses: "", certs: "" },
+  { name: "Data Visualization", discipline: "Data & Analytics", term: "data visualization", hours: "", courses: "", certs: "" },
+  { name: "NocoDB", discipline: "Data & Analytics", term: "nocodb", hours: "", courses: "", certs: "" },
+  { name: "Git", discipline: "Platforms & Building", term: "git", hours: "", courses: "", certs: "" },
+  { name: "GitHub", discipline: "Platforms & Building", term: "github", hours: "", courses: "", certs: "" },
+  { name: "Node.js", discipline: "Platforms & Building", term: "node.js", hours: "", courses: "", certs: "" },
+  { name: "Vercel", discipline: "Platforms & Building", term: "vercel", hours: "", courses: "", certs: "" },
+  { name: "Expo", discipline: "Platforms & Building", term: "expo", hours: "", courses: "", certs: "" },
+  { name: "Amazon ECS", discipline: "Platforms & Building", term: "amazon ecs", hours: "", courses: "", certs: "" },
+  { name: "Salesforce", discipline: "Platforms & Building", term: "salesforce", hours: "", courses: "", certs: "" },
+  { name: "ServiceNow", discipline: "Platforms & Building", term: "servicenow", hours: "", courses: "", certs: "" }
 ];
 
 function fillIn(v) { return v && String(v).trim() ? v : "To fill in"; }

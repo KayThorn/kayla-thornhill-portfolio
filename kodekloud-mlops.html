@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KodeKloud — 100 Days of MLOps — Kayla M. Thornhill</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+<nav class="site-nav">
+  <a href="index.html">Home</a>
+  <a href="bio.html">Bio</a>
+  <a href="projects.html">Projects</a>
+  <a href="skills.html">Skills</a>
+  <a href="education.html">Education</a>
+  <button class="theme-toggle" type="button">Light / Dark</button>
+</nav>
+
+<header class="hero">
+  <h1>KodeKloud — 100 Days of MLOps</h1>
+  <p class="tagline">One lab a day; every completed day, walked through</p>
+</header>
+
+<p><a href="education.html">&larr; Back to Education</a></p>
+
+<h2 id="day-1">Day 1 — Create a Python Virtual Environment for ML</h2>
+<p class="role-line">Completed November 11, 2026</p>
+<p>Filed steps, verbatim:</p>
+<p><strong>Step by step:</strong></p><ol>
+<li><code>cd /root/code</code></li>
+<li><code>python3 -m venv ml-env</code></li>
+<li><code>source ml-env/bin/activate</code></li>
+<li><code>pip install numpy pandas scikit-learn matplotlib</code></li>
+<li><code>pip freeze &gt; requirements.txt</code></li>
+</ol>
+
+<h2 id="day-2">Day 2 — Fix a Broken JupyterLab Server Configuration</h2>
+<p class="role-line">Completed November 12, 2026</p>
+<p>JupyterLab wasn't coming up right. (Completed solo — she corrected the settings herself before asking for a check.)</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>Inspect <code>/root/code/jupyter_lab_config.py</code>.</li>
+<li>Correct the ServerApp settings: port 8888, ip 0.0.0.0, root_dir /root/notebooks/.</li>
+<li>Run the server with that config and <code>--allow-root</code>.</li>
+<li>Verify live: <code>ss</code> shows it listening on 0.0.0.0:8888; curl to localhost:8888 returns 302 (Jupyter's normal redirect); /root/notebooks exists.</li>
+</ol>
+
+<h2 id="day-3">Day 3 — Fix a Broken uv Lockfile Specification</h2>
+<p class="role-line">Completed November 14, 2026</p>
+<p>The xFusionCorp ML team uses uv + lockfiles for consistent dependencies. The fraud-detection project's requirements.in broke team standards in three places.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>Diagnose the three faults: <code>sklearn</code> is the wrong name (the real package is scikit-learn); <code>mlflow&gt;=100.0</code> is an unsatisfiable pin (real versions are 2.x/3.x); pandas is missing entirely.</li>
+<li>Rewrite requirements.in with exactly the four top-level packages as bare names: scikit-learn, mlflow, pandas, numpy.</li>
+<li>Compile the lockfile: <code>uv pip compile requirements.in -o requirements.txt</code> — resolved pins include mlflow 3.18.0, numpy 2.5.4, pandas 3.1.1, scikit-learn 1.9.1, plus the full transitive tree.</li>
+</ol>
+<p><strong>What it taught:</strong> requirements.in is the human list — what the project intends to use. The lockfile is the frozen receipt — every package at an exact version, so any machine installs the identical environment and the model behaves the same everywhere.</p>
+
+<h2 id="day-4">Day 4 — Add a .gitignore and Untrack Committed Artifacts</h2>
+<p class="role-line">Completed November 15, 2026</p>
+<p>The fraud-detection repo was committed with no .gitignore, so .env, notebook checkpoints, a trained model file, __pycache__ output, and the venv were all tracked by Git.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>Read what's tracked: <code>git ls-files</code>.</li>
+<li>Write .gitignore with the six standard patterns: <code>__pycache__/</code>, <code>*.pyc</code>, <code>venv/</code>, <code>.ipynb_checkpoints/</code>, <code>*.pkl</code>, <code>.env</code>.</li>
+<li>Untrack the five artifacts with <code>git rm --cached</code> (with <code>-r</code> for directories) — the files stay on disk.</li>
+<li>Verify with <code>git status</code>: staged deletions listed, and the removed files do not reappear as untracked — the ignore rules are working.</li>
+<li>Commit the cleanup. Final <code>git ls-files</code> shows exactly .gitignore, README.md, requirements.txt, and the two source files.</li>
+</ol>
+<p><strong>What it taught:</strong> A .gitignore never untracks files Git already tracks — ignoring and untracking are two separate steps. <code>git rm --cached</code> removes a file from tracking while leaving it on disk.</p>
+
+<h2 id="day-5">Day 5 — Fix a Broken ML Workflow Makefile</h2>
+<p class="role-line">Completed November 16, 2026</p>
+<p>Fix the fraud-detection Makefile so <code>make all</code> completes, with six targets (setup/data/train/test/clean/all) aligned to team standards. Passed with about 20 seconds left on the lab timer.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>Diagnose with <code>cat -T</code>: the data recipe is indented with spaces, not a tab — Make's "missing separator" error.</li>
+<li>Fix the indentation with sed, swapping the leading spaces for a real tab.</li>
+<li>Spot that <code>all:</code> reads <code>setup train test</code> — the data target is missing; add it in its pipeline slot.</li>
+<li>Rebuild the clean target as three find-based lines: remove __pycache__ directories, remove .pytest_cache directories, and clear the contents of models/ while keeping the folder (<code>-mindepth 1</code>).</li>
+<li>Add the missing declaration at the top: <code>.PHONY: setup data train test clean all</code>.</li>
+<li>Run <code>make all</code> — completes; the lab check passes.</li>
+</ol>
+<p><strong>What it taught:</strong> A target's recipe lines must start with a real tab. A target line like <code>all: setup data train test</code> is a dependency list Make runs left to right — the order is the pipeline. .PHONY declares names as actions, not files, so Make never mistakes them for up-to-date files.</p>
+
+<h2 id="day-6">Day 6 — Fix a Broken Ruff and Black Configuration</h2>
+<p class="role-line">Completed November 18, 2026</p>
+<p>The fraud-detection project was failing both quality gates. Required end state: ruff and black both configured to line length 120, ruff's rule selection to include E, F, W, I, and both checks exiting 0.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>First runs from the wrong directory return path errors (E902, "Path 'src/' does not exist") — a location problem, not a code problem. From the project directory, the real faults show.</li>
+<li>Fix the config in pyproject.toml: ruff line-length 88 → 120; black line-length 100 → 120; ruff lint.select ["E", "F"] → ["E", "F", "W", "I"]; restructure ruff's deprecated top-level select into lint.select.</li>
+<li>The wider rule set surfaces two source findings in process_data.py: an unused <code>os</code> import (F401) and an unsorted import block (I001).</li>
+<li>Run <code>ruff check src/ --fix</code>: removing the unused import dissolves both findings — a one-import block can't be unsorted.</li>
+<li>Run <code>black src/</code> to reformat the one flagged file.</li>
+<li>Verify the pair together: <code>ruff check src/</code> → "All checks passed!"; <code>black --check src/</code> → "5 files would be left unchanged." Both gates exit 0.</li>
+</ol>
+<p><strong>What it taught:</strong> Config before source: the settings decide what the tools judge at all. <code>--check</code> only reports — dropping it is what makes the tool write the fix. More rules can mean more errors, and that's coverage, not regression.</p>
+
+<h2 id="day-7">Day 7 — Test and Package the Fraud-Detection Module</h2>
+<p class="role-line">Completed November 22, 2026</p>
+<p>Write unit tests for the fraud-detection module's predict(), rectify the draft pyproject.toml, and build a compliant wheel.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>Read the source first: <code>predict(data)</code> returns a <strong>list</strong> of labels — <code>[1 if row[0] &gt; 100 else 0 for row in data]</code> — so one fraud row in gives [1] back, not 1.</li>
+<li>Write tests/test_predict.py: the fraud test asserts <code>predict([[150]]) == [1]</code>; the legit test asserts <code>predict([[50]]) == [0]</code>.</li>
+<li>Fix pyproject.toml in place: name fraud-detection → fraud_detection (underscore); version 0.0.1 → 0.1.0; dependencies [] → [scikit-learn, pandas, numpy]; pytest pythonpath set to ["src"] so the tests can find the package.</li>
+<li>Build with <code>python3 -m build</code> → dist/fraud_detection-0.1.0-py3-none-any.whl.</li>
+<li>Verify the artifact itself: the wheel's METADATA lists all three Requires-Dist entries, and pytest reports 2 passed.</li>
+</ol>
+<p><strong>What it taught:</strong> Edit config values in place, in their section — appending a second copy under a later header makes it that section's key and it does nothing. And verify the artifact, not the announcement: the wheel's filename can look right while the config inside is wrong.</p>
+
+<h2 id="day-8">Day 8 — Fix a Broken pre-commit Configuration</h2>
+<p class="role-line">Completed November 24, 2026</p>
+<p>Repair the draft .pre-commit-config.yaml so all five required hooks (trailing-whitespace, end-of-file-fixer, check-yaml, ruff, black) run clean, every repo pinned to a current release, hooks registered with git.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>First run stops at a structural error: the black entry has no <code>rev:</code> at all — config validation reports one error at a time, so the other defects hide behind it.</li>
+<li>Hand-add black's pin, sourced from <code>black --version</code> (26.5.1) — autoupdate can't fix a config it can't parse.</li>
+<li>Run <code>pre-commit autoupdate</code>: its failure messages double as diagnostics, naming the two bad hook ids exactly — <code>check_yaml</code> (should be check-yaml) and <code>ruff-lint</code> (should be ruff).</li>
+<li>Fix both ids, and point ruff at its current home, astral-sh/ruff-pre-commit (the draft used the old charliermarsh address).</li>
+<li>Autoupdate completes: pre-commit-hooks v2.3.0 → v6.0.0, ruff v0.1.0 → v0.17.6, black 26.5.1 → 26.10.1.</li>
+<li>Register the hooks: <code>pre-commit install</code>.</li>
+<li>Final run: <code>pre-commit run --all-files</code> — all five hooks Passed.</li>
+</ol>
+<p><strong>What it taught:</strong> Parse errors mask everything else — fix config in layers: structure, then ids and sources, then pins, then run. autoupdate refreshes pins only, but its "missing hooks" complaints tell you your id is wrong.</p>
+
+<footer class="site-footer">
+  <div class="footer-nav">
+    <a href="index.html">Home</a>
+    <a href="bio.html">Bio</a>
+    <a href="projects.html">Projects</a>
+    <a href="skills.html">Skills</a>
+    <a href="education.html">Education</a>
+  </div>
+  <p>Connect with me on <a href="https://www.linkedin.com/in/kayla-thornhill">LinkedIn</a> ·
+  kayla.thornhill@outlook.com</p>
+</footer>
+<script src="script.js"></script>
+
+</div>
+</body>
+</html>

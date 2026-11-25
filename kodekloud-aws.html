@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KodeKloud — Cloud (AWS) — Kayla M. Thornhill</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+<nav class="site-nav">
+  <a href="index.html">Home</a>
+  <a href="bio.html">Bio</a>
+  <a href="projects.html">Projects</a>
+  <a href="skills.html">Skills</a>
+  <a href="education.html">Education</a>
+  <button class="theme-toggle" type="button">Light / Dark</button>
+</nav>
+
+<header class="hero">
+  <h1>KodeKloud — Cloud (AWS)</h1>
+  <p class="tagline">One lab a day; every completed day, walked through</p>
+</header>
+
+<p><a href="education.html">&larr; Back to Education</a></p>
+
+<h2 id="day-1">Day 1 — Create Key Pair</h2>
+<p class="role-line">Completed November 11, 2026</p>
+<p>Filed note, verbatim: "Key pair created through AWS EC2 in preferred region."</p>
+<p class="slot-note">Walkthrough detail to be added — the filed record for this day is brief.</p>
+
+<h2 id="day-2">Day 2 — Create Security Group</h2>
+<p class="role-line">Completed November 12, 2026</p>
+<p>Filed note, verbatim: "Created EC2 security group with specified inbound rules."</p>
+<p class="slot-note">Walkthrough detail to be added — the filed record for this day is brief.</p>
+
+<h2 id="day-3">Day 3 — Create Subnet</h2>
+<p class="role-line">Completed November 14, 2026</p>
+<p>Nautilus migration scenario: create one subnet named xfusion-subnet in the default VPC (us-east-1). The task specified no CIDR block — any valid, non-overlapping block inside the VPC range works.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>Work through candidate CIDR blocks in the console — several bounce because they overlap existing subnets or aren't valid block boundaries.</li>
+<li>Land on one that takes: <code>172.31.110.0/20</code>.</li>
+<li>Create the subnet with that block.</li>
+</ol>
+<p><strong>What it taught:</strong> /20 blocks align on third-octet multiples of 16 (0, 16, 32, 48…), and each spans 16 numbers — 110 sits inside the free 96–111 block, which is why it worked. Method for next time: read the existing subnets list first, find the missing multiple of 16, use it directly. (Done solo, at her own choice.)</p>
+
+<h2 id="day-4">Day 4 — Enable Versioning for S3 Bucket</h2>
+<p class="role-line">Completed November 15, 2026</p>
+<p>Enable versioning on the S3 bucket. Completed solo; no step detail was filed for this day.</p>
+<p class="slot-note">Walkthrough detail to be added — the filed record for this day is brief.</p>
+
+<h2 id="day-5">Day 5 — Create GP3 Volume</h2>
+<p class="role-line">Completed November 16, 2026</p>
+<p>Create an EBS volume to the lab's spec: named <code>devops-volume</code>, type <strong>gp3</strong>, size <strong>2 GiB</strong>.</p>
+<p class="slot-note">Walkthrough detail to be added — the filed record for this day is brief.</p>
+
+<h2 id="day-6">Day 6 — Launch EC2 Instance</h2>
+<p class="role-line">Completed November 18, 2026</p>
+<p>Nautilus migration scenario: launch an EC2 instance named <code>datacenter-ec2</code> — Amazon Linux AMI, t2.micro, a new RSA key pair named <code>datacenter-kp</code>, and the default security group attached. Completed entirely solo.</p>
+<p class="slot-note">Walkthrough detail to be added — the filed record for this day is brief.</p>
+
+<h2 id="day-7">Day 7 — Change EC2 Instance Type</h2>
+<p class="role-line">Completed November 22, 2026</p>
+<p>Filed steps, verbatim:</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>Stopped instance.</li>
+<li>Updated instance type (t2.micro → t2.nano).</li>
+<li>Started instance — devops-ec2 back in running state.</li>
+</ol>
+<p><strong>What it taught:</strong> The day's filed note ends with a quote: "IT'S THE will, NOT THE skill.." — Jim Bunney</p>
+
+<h2 id="day-8">Day 8 — Enable Stop Protection for EC2 Instance</h2>
+<p class="role-line">Completed November 24, 2026</p>
+<p>Nautilus migration scenario: enable stop protection on the EC2 instance named <code>datacenter-ec2</code> in us-east-1 — the same instance launched on Day 6. No further notes filed for this day yet.</p>
+<p class="slot-note">Walkthrough detail to be added — the filed record for this day is brief.</p>
+
+<footer class="site-footer">
+  <div class="footer-nav">
+    <a href="index.html">Home</a>
+    <a href="bio.html">Bio</a>
+    <a href="projects.html">Projects</a>
+    <a href="skills.html">Skills</a>
+    <a href="education.html">Education</a>
+  </div>
+  <p>Connect with me on <a href="https://www.linkedin.com/in/kayla-thornhill">LinkedIn</a> ·
+  kayla.thornhill@outlook.com</p>
+</footer>
+<script src="script.js"></script>
+
+</div>
+</body>
+</html>

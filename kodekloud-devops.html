@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KodeKloud — 100 Days of DevOps — Kayla M. Thornhill</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+<nav class="site-nav">
+  <a href="index.html">Home</a>
+  <a href="bio.html">Bio</a>
+  <a href="projects.html">Projects</a>
+  <a href="skills.html">Skills</a>
+  <a href="education.html">Education</a>
+  <button class="theme-toggle" type="button">Light / Dark</button>
+</nav>
+
+<header class="hero">
+  <h1>KodeKloud — 100 Days of DevOps</h1>
+  <p class="tagline">One lab a day; every completed day, walked through</p>
+</header>
+
+<p><a href="education.html">&larr; Back to Education</a></p>
+
+<h2 id="day-1">Day 1 — Linux User Setup with Non-Interactive Shell</h2>
+<p class="role-line">Completed November 10, 2026</p>
+<p>Create a Linux user whose account uses a non-interactive shell.</p>
+<p class="slot-note">Walkthrough detail to be added — the filed record for this day is brief.</p>
+
+<h2 id="day-2">Day 2 — Temporary User Setup with Expiry</h2>
+<p class="role-line">Completed November 11, 2026</p>
+<p>Nautilus project, App Server 1 (stapp01): give a developer time-limited access.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>SSH to App Server 1 as tony.</li>
+<li>Create the temporary user with an account expiry date: <code>sudo useradd -e 2026-12-07 ravi</code>.</li>
+</ol>
+<p><strong>What it taught:</strong> The <code>-e</code> flag sets the account expiry date; usernames are lowercase per protocol.</p>
+
+<h2 id="day-3">Day 3 — Secure Root SSH Access</h2>
+<p class="role-line">Completed November 12, 2026</p>
+<p>xFusionCorp security protocol: disable direct SSH root login on all three app servers (stapp01, stapp02, stapp03).</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>On each server, check <code>PermitRootLogin</code> in <code>/etc/ssh/sshd_config</code> (it was <code>yes</code>).</li>
+<li>Change it with sed: <code>sudo sed -i 's/^PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config</code>.</li>
+<li>Verify the config now shows <code>PermitRootLogin no</code>.</li>
+<li>Restart the SSH service: <code>sudo systemctl restart sshd</code>.</li>
+<li>Verify the effective setting: <code>sudo sshd -T | grep -i permitrootlogin</code> returns <code>permitrootlogin no</code>.</li>
+</ol>
+
+<h2 id="day-4">Day 4 — Script Execution Permissions</h2>
+<p class="role-line">Completed November 14, 2026</p>
+<p>The backup script <code>/tmp/xfusioncorp.sh</code> on App Server 1 had no permissions at all; grant execute access so any user can run it.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>Read the starting state with <code>ls -l</code>: <code>----------</code> — ten dashes, no permissions for anyone; the file is owned by root, so the fix needs sudo.</li>
+<li>Assemble and run: <code>sudo chmod 755 /tmp/xfusioncorp.sh</code>.</li>
+<li>Verify the end state: <code>-rwxr-xr-x</code> — owner rwx, group r-x, others r-x.</li>
+</ol>
+<p><strong>What it taught:</strong> The 4-2-1 scheme: r = 4, w = 2, x = 1; each group's sum is one digit of the mode, so rwxr-xr-x = 755. A script also needs read permission — bash has to read the file to run it.</p>
+
+<h2 id="day-5">Day 5 — SELinux Installation and Configuration</h2>
+<p class="role-line">Completed November 15, 2026</p>
+<p>App Server 2 (stapp02): install the SELinux packages and permanently disable SELinux ahead of later configuration work; the graded state is the config file, not the current runtime status.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>Check the starting state: <code>/etc/selinux/config</code> doesn't exist yet, and <code>rpm -qa | grep -i selinux</code> shows only the libselinux libraries — the policy and tools aren't installed.</li>
+<li>Install: <code>sudo yum install -y selinux-policy selinux-policy-targeted policycoreutils policycoreutils-python-utils</code>. The config file now exists, reading <code>SELINUX=enforcing</code>.</li>
+<li>Change it permanently: <code>sudo sed -i 's/^SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config</code>.</li>
+<li>Verify: the config reads <code>SELINUX=disabled</code>; <code>SELINUXTYPE=targeted</code> left untouched.</li>
+</ol>
+<p><strong>What it taught:</strong> The config file is what the kernel reads at boot — editing it is the permanent change. <code>setenforce 0</code> only affects the running system until reboot. A missing config file is itself diagnostic: it arrives with the policy packages.</p>
+
+<h2 id="day-6">Day 6 — Create a Cron Job</h2>
+<p class="role-line">Completed November 16, 2026</p>
+<p>On all three Stratos app servers: install the cron package, start the service, and add a root cron job that writes to /tmp/cron_text every five minutes.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>Install the package: <code>sudo yum install -y cronie</code>.</li>
+<li>Start the service: <code>sudo systemctl start crond</code> — verified active (running).</li>
+<li>Check root's existing crontab first: <code>sudo crontab -u root -l</code> (all three servers: no crontab — a clean slate).</li>
+<li>Install the entry: <code>echo '*/5 * * * * echo hello &gt; /tmp/cron_text' | sudo crontab -u root -</code>.</li>
+<li>Verify by listing root's crontab and seeing the line. (Server 1 worked step by step; servers 2 and 3 done solo with the same routine.)</li>
+</ol>
+<p><strong>What it taught:</strong> Package vs service: cronie is the package, crond is the daemon it provides. Cron fields are minute, hour, day-of-month, month, day-of-week — <code>*/5</code> in the minute field means every five minutes.</p>
+
+<h2 id="day-7">Day 7 — Linux SSH Authentication</h2>
+<p class="role-line">Completed November 18, 2026</p>
+<p>Set up password-less SSH from the jump host (user thor) to all three app servers, so scheduled scripts can run unattended.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>Check <code>~/.ssh</code> on the jump host first: no existing key pair, so no overwrite risk.</li>
+<li>Generate an ed25519 key pair with <code>ssh-keygen</code> — default location, empty passphrase.</li>
+<li>Distribute the public key with <code>ssh-copy-id</code> to tony (stapp01), steve (stapp02), and banner (stapp03) — each asks for that user's password one last time.</li>
+<li>Verify: SSH into each server with no password prompt. (Servers 2 and 3 done solo with the same routine.)</li>
+</ol>
+<p><strong>What it taught:</strong> The public key is the lock — it's built to be shared and lands in each target's authorized_keys. The private key never leaves the machine that generated it. The empty passphrase is the point: unattended scripts have no human to type one.</p>
+
+<h2 id="day-8">Day 8 — Install Ansible</h2>
+<p class="role-line">Completed November 22, 2026</p>
+<p>Install Ansible at a pinned version.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>Install with pip: <code>sudo pip3 install ansible==4.9.0</code>.</li>
+</ol>
+<p><strong>What it taught:</strong> The day's filed note is a quote: "Regret for the time wasted can become a power of good in the time that remains." — Arthur Brisbane</p>
+
+<h2 id="day-9">Day 9 — MariaDB Troubleshooting</h2>
+<p class="role-line">Completed November 24, 2026</p>
+<p>The Nautilus app can't connect to its database — the MariaDB service is down on stdb01. Diagnose and fix it.</p>
+<p><strong>Step by step:</strong></p><ol>
+<li>Check the service: loaded, <strong>disabled</strong>, <strong>inactive (dead)</strong> — it hadn't crashed; it was off and not set to start at boot.</li>
+<li>First start attempt fails. The status log names it: "Database MariaDB is not initialized… Make sure the /var/lib/mysql is empty."</li>
+<li>Look for /var/lib/mysql: it doesn't exist. Listing /var/lib shows why — the data directory had been renamed to <code>/var/lib/mysqld</code> (the giveaway: owned by mysql:mysql).</li>
+<li>Rename it back: <code>sudo mv /var/lib/mysqld /var/lib/mysql</code>. The restored directory is empty with the right owner — exactly the state the startup script needs.</li>
+<li>Start again: the service comes up <strong>active (running)</strong> and <strong>enabled</strong>.</li>
+</ol>
+<p><strong>What it taught:</strong> <code>start</code> means now; <code>enable</code> means every boot. And "preset: disabled" in the status output is just the vendor's shipped default — the operative word is the first one, enabled.</p>
+
+<footer class="site-footer">
+  <div class="footer-nav">
+    <a href="index.html">Home</a>
+    <a href="bio.html">Bio</a>
+    <a href="projects.html">Projects</a>
+    <a href="skills.html">Skills</a>
+    <a href="education.html">Education</a>
+  </div>
+  <p>Connect with me on <a href="https://www.linkedin.com/in/kayla-thornhill">LinkedIn</a> ·
+  kayla.thornhill@outlook.com</p>
+</footer>
+<script src="script.js"></script>
+
+</div>
+</body>
+</html>
