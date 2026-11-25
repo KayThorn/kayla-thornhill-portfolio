@@ -225,3 +225,70 @@ figure.shot figcaption {
   background: var(--surface);
   color: var(--ink);
 }
+
+.skill-select {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 0.95rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  max-width: 100%;
+}
+
+.view-toggle { margin: 0 0 1.1rem; font-family: Verdana, Geneva, sans-serif; font-size: 0.88rem; }
+.view-toggle button {
+  font: inherit;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.3rem 0.9rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+.view-toggle button.active { background: var(--accent-soft); }
+
+.skill-list-group { font-family: Verdana, Geneva, sans-serif; font-size: 1rem; margin: 1.3rem 0 0.5rem; }
+
+.skill-row {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 0.95rem;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 0.45rem;
+  cursor: pointer;
+}
+.skill-row:hover { border-color: var(--accent); }
+.skill-row .disc { color: var(--muted); font-size: 0.82rem; }
+
+.skill-detail {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  margin-top: 1.4rem;
+}
+.skill-detail h3 { margin-top: 0; }
+.skill-detail dl { display: grid; grid-template-columns: auto 1fr; gap: 0.3rem 1rem; margin: 0 0 0.8rem; }
+.skill-detail dt { font-family: Verdana, Geneva, sans-serif; font-size: 0.88rem; color: var(--muted); }
+.skill-detail dd { margin: 0; }
+
+.cert-slot {
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+  color: var(--muted);
+}
+
+.footer-nav { font-family: Verdana, Geneva, sans-serif; font-size: 0.9rem; margin-bottom: 0.9rem; }
+.footer-nav a { margin-right: 1rem; }
