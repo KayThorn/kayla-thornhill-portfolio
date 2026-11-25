@@ -292,3 +292,20 @@ figure.shot figcaption {
 
 .footer-nav { font-family: Verdana, Geneva, sans-serif; font-size: 0.9rem; margin-bottom: 0.9rem; }
 .footer-nav a { margin-right: 1rem; }
+
+.carousel { position: relative; margin-bottom: 0.6rem; }
+.carousel-viewport { overflow: hidden; border-radius: 10px; }
+.carousel-track { display: flex; transition: transform 0.3s ease; }
+.carousel-slide { min-width: 100%; }
+.carousel-slide .card { margin-bottom: 0; height: 100%; }
+.carousel-controls {
+  display: flex; align-items: center; gap: 0.9rem; margin-top: 0.7rem;
+  font-family: Verdana, Geneva, sans-serif; font-size: 0.9rem;
+}
+.carousel-btn {
+  font: inherit;
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: 0.3rem 0.95rem; cursor: pointer;
+}
+.carousel-count { color: var(--muted); }

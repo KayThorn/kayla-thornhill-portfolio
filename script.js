@@ -69,11 +69,14 @@ document.addEventListener('DOMContentLoaded', function () {
       jump.appendChild(o);
     });
     jump.addEventListener('change', function () {
+      if (!jump.value) return;
       var input = document.getElementById('project-search');
-      if (input && jump.value) {
+      if (input) {
         input.value = jump.value;
         input.dispatchEvent(new Event('input'));
-        document.getElementById('projects').scrollIntoView();
+        input.scrollIntoView();
+      } else {
+        window.location.href = 'projects.html?skill=' + encodeURIComponent(jump.value);
       }
     });
   }
@@ -134,4 +137,23 @@ document.addEventListener('DOMContentLoaded', function () {
       if (match) openSkill(match);
     }
   }
+});
+
+// Home page project carousel: manual controls only, no autoplay.
+document.addEventListener('DOMContentLoaded', function () {
+  var track = document.querySelector('.carousel-track');
+  if (!track) return;
+  var slides = track.children.length;
+  var idx = 0;
+  var count = document.getElementById('carousel-count');
+  function show(i) {
+    idx = (i + slides) % slides;
+    track.style.transform = 'translateX(' + (-idx * 100) + '%)';
+    if (count) count.textContent = (idx + 1) + ' of ' + slides;
+  }
+  var prev = document.getElementById('carousel-prev');
+  var next = document.getElementById('carousel-next');
+  if (prev) prev.addEventListener('click', function () { show(idx - 1); });
+  if (next) next.addEventListener('click', function () { show(idx + 1); });
+  show(0);
 });
