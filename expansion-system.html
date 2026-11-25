@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expansion Decision System — Kayla M. Thornhill</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+<p class="back"><a href="index.html">← Back to portfolio</a></p>
+
+<header class="hero">
+  <h1>Nonprofit Expansion Decision System</h1>
+  <p class="tagline">Power Apps · SharePoint Lists · Governance by design</p>
+</header>
+
+<h2>The problem</h2>
+<p>A growing nonprofit wants to expand into new markets, but "are we ready?" was a judgment call
+made in conversation. Leadership needed the answer to come from evidence: a market opens only
+when the organization's finances and production capacity meet set criteria, that market's own
+entry requirements are satisfied, and a formal vote approves the move. My job, as GRC Chair, was
+to design and build the system that makes that decision — and makes it auditable.</p>
+
+<h2>How it works</h2>
+<ul>
+  <li><strong>Criteria come in four families</strong> — Financial, Production, Market-entry, and
+  Success-metric — all stored in a single Criteria list, separated by a Family field rather than
+  four parallel lists, so one pattern serves every family.</li>
+  <li><strong>Each criterion has a form:</strong> a numeric threshold ("ticket backlog at most 25"),
+  a yes/no condition ("insurance policy current"), or a sustained-for rule ("operating reserve of
+  at least $10,000, held for one quarter").</li>
+  <li><strong>Values are snapshots.</strong> A separate values store holds dated observations for
+  each criterion, entered by hand from verified sources. The app never calculates from live
+  systems; it reads the snapshot record and renders a verdict — met, or not met.</li>
+  <li><strong>Sustained-for has a precise boundary:</strong> a snapshot exactly one duration old
+  belongs to the prior period, so a value must be strictly inside the window to count.</li>
+  <li><strong>Markets move through stages</strong> — Idea → Plan → Waiting or Goal → Progressing →
+  Ready → Approved → Executed. A single gate review covers the financial, production, and
+  market-entry sides together; approval requires a recorded board/founders vote, planning
+  approvals run departmental-then-board, and every plan carries my GRC sign-off. The stage field
+  is adjusted only after a vote concludes.</li>
+  <li><strong>Approved is not the end.</strong> An executed market is later judged against the
+  fourth family — success metrics — and can return to Waiting if it stops meeting them.</li>
+</ul>
+
+<h2>What is built</h2>
+<p>The data layer is eight SharePoint lists: Departments, Criteria, the values store, Markets,
+Regulations, Cost lines, Document check-offs, and Approvals — built with standard connectors
+only. On top of it, the organization's dashboard gallery reads the org-level criteria and renders
+a live verdict per criterion, with headline counts computed from the data itself:
+<strong>Financial: 2 of 2 met · Production: 1 of 3 met.</strong></p>
+<p>The core logic was proven before any interface work: a sustained-for financial criterion with
+four monthly snapshots (8,500 → 10,200 → 10,800 → 11,500 against a 10,000 threshold held for one
+quarter) evaluates to MET, and the boundary rule was tested deliberately, not assumed.</p>
+
+<h2>What I learned building it</h2>
+<ul>
+  <li>Verdict rendering differs by criterion form, so the interface stacks one verdict label per
+  form, each visible only for its own form — simpler and more reliable than one mega-formula.</li>
+  <li>Lookups and nested filters need values captured as scalars before filtering; scope in this
+  environment does not behave the way a programmer first expects.</li>
+  <li>Design rule I now reuse everywhere: if a field's values are a closed set, it is a choice
+  field; if the app branches on it, the choices are locked; quantities are always numbers.</li>
+</ul>
+
+<h2>Next</h2>
+<p>A pipeline view showing every market by stage, a market detail screen, and a review screen for
+the gate vote — then a full walkthrough with a sample market, end to end.</p>
+
+<footer>
+  <p><a href="index.html">Kayla M. Thornhill — portfolio home</a></p>
+</footer>
+
+</div>
+</body>
+</html>
