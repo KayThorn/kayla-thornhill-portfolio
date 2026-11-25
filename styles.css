@@ -309,3 +309,17 @@ figure.shot figcaption {
   padding: 0.3rem 0.95rem; cursor: pointer;
 }
 .carousel-count { color: var(--muted); }
+
+.resume h2 {
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.25rem;
+  font-size: 1.15rem;
+}
+.resume h3 { margin-bottom: 0.15rem; }
+.resume .role-line { color: var(--muted); font-family: Verdana, Geneva, sans-serif; font-size: 0.9rem; margin: 0 0 0.5rem; }
+.resume ul { margin-top: 0.3rem; }
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; }
+}
