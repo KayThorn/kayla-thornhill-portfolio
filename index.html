@@ -15,6 +15,8 @@
   <a href="governance.html">GRC Governance</a>
   <a href="ux-project.html">UX Project</a>
   <a href="craft-hollow.html">Craft Hollow</a>
+  <a href="research.html">Research</a>
+  <button class="theme-toggle" type="button">Light / Dark</button>
 </nav>
 
 <header class="hero">
@@ -71,7 +73,11 @@
 
 <h2>Projects</h2>
 
-<div class="card">
+<div class="search-box">
+  <input type="search" id="project-search" placeholder="Search projects by skill or interface — e.g. Power Apps, Figma, governance" aria-label="Search projects by skill or interface">
+</div>
+
+<div class="card" data-tags="power apps sharepoint lists governance grc criteria data modeling power automate decision system">
   <span class="status">In progress — dashboard complete</span>
   <h3><a href="expansion-system.html">Nonprofit Expansion Decision System (Power Apps)</a></h3>
   <p>A criteria-driven decision system that tells a growing nonprofit when it is ready to expand
@@ -79,7 +85,7 @@
   <p><a href="expansion-system.html">Open the project page →</a></p>
 </div>
 
-<div class="card">
+<div class="card" data-tags="governance grc ndas agreements contracts hr documentation policy compliance nonprofit">
   <span class="status">Ongoing role — since September 2026</span>
   <h3><a href="governance.html">Governance Infrastructure — GRC Chair</a></h3>
   <p>Building a young nonprofit's governance foundation from near zero: the documents and
@@ -87,7 +93,7 @@
   <p><a href="governance.html">Open the project page →</a></p>
 </div>
 
-<div class="card">
+<div class="card" data-tags="ux research usability study figma prototyping synthesis prioritization interface ticket app">
   <span class="status">In progress — completing November 30, 2026</span>
   <h3><a href="ux-project.html">UX Research &amp; Design Project — Ticket App Study</a></h3>
   <p>The capstone of my Google UX Design certificate: an unmoderated usability study, synthesized
@@ -95,7 +101,7 @@
   <p><a href="ux-project.html">Open the project page →</a></p>
 </div>
 
-<div class="card">
+<div class="card" data-tags="javascript next.js supabase vercel game development full-stack interface">
   <span class="status">In development</span>
   <h3><a href="craft-hollow.html">Craft Hollow — Cozy Craft-Stall Game</a></h3>
   <p>A personal software project teaching me full-stack development: Next.js, Vercel, and Supabase.</p>
@@ -120,10 +126,22 @@ Google UX Design Certificate — finishing November 30, 2026<br>
 CompTIA Security+ — next, first in my certification sequence<br>
 Thinkcloudly SOC Bootcamp — November 24–28, 2026 (SOC fundamentals, cyber kill chain, Splunk log analysis, malware analysis, threat intelligence)</p>
 
-<footer>
+<footer class="site-footer">
+  <div class="footer-skills">
+    <strong>Skills:</strong>
+    <a href="index.html?skill=power%20apps">Power Apps</a>
+    <a href="index.html?skill=sharepoint">SharePoint</a>
+    <a href="index.html?skill=governance">Governance</a>
+    <a href="index.html?skill=agreements">Agreements</a>
+    <a href="index.html?skill=ux">UX Research</a>
+    <a href="index.html?skill=figma">Figma</a>
+    <a href="index.html?skill=javascript">JavaScript</a>
+    <a href="index.html?skill=security">Security</a>
+  </div>
   <p>Connect with me on <a href="https://www.linkedin.com/in/kayla-thornhill">LinkedIn</a> ·
   kayla.thornhill@outlook.com</p>
 </footer>
+<script src="script.js"></script>
 
 </div>
 </body>

@@ -169,3 +169,59 @@ figure.shot figcaption {
   color: var(--muted);
   font-style: italic;
 }
+
+:root[data-theme="dark"] {
+  --bg: #26282b;
+  --surface: #303338;
+  --ink: #d9d6d0;
+  --muted: #a4a9ae;
+  --accent: #93a48b;
+  --accent-soft: #39413a;
+  --border: #464b50;
+}
+
+:root[data-theme="dark"] a { color: #a9bfa2; }
+:root[data-theme="dark"] a:hover { color: #c2d4bb; }
+:root[data-theme="dark"] .status { color: #b9c6b2; }
+
+.theme-toggle {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 0.82rem;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.25rem 0.8rem;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.site-footer {
+  margin-top: 3.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.footer-skills {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 0.88rem;
+  margin-bottom: 0.9rem;
+}
+
+.footer-skills a { margin-right: 0.9rem; white-space: nowrap; }
+
+.search-box { margin: 0 0 1.2rem; }
+
+.search-box input {
+  width: 100%;
+  max-width: 30rem;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 0.95rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+}
